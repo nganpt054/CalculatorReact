@@ -9,7 +9,6 @@ class App extends React.Component {
     super(props);
     this.state = {
         question: '',
-        answer: ''
     }
     this.handleClick = this.handleClick.bind(this);
 }
@@ -21,23 +20,18 @@ handleClick(event){
             if (this.state.question!=='')
             {
                 var ans='';
-                try
-                {
-                    ans = eval(this.state.question);
+                try {
+                  ans = eval(this.state.question);
+                } catch (error) {
+                  ans="Math Error"
                 }
-                catch(err)
-                {
-                    this.setState({answer: "Math Error"});
-                }
-                if (ans===undefined)
-                    this.setState({answer: "Math Error"});
-                else
-                    this.setState({ answer: ans , question: this.state.question});
+               
+                this.setState({question: ans});
                 break;
             }
         }
         case 'AC': {
-            this.setState({ question: '', answer: '' });
+            this.setState({ question: '' });
             break;
         }
 
@@ -47,9 +41,14 @@ handleClick(event){
             this.setState({question: str});
             break;
         }
-
+      //   case 'X': {
+      //     var str = this.state.question;
+      //     str = str.substr(0,str.length)+"*";
+      //     this.setState({question: str});
+      //     break;
+      // }
         default: {
-            this.setState({ question: this.state.question += value})
+            this.setState({ question: ((this.state.question += value).replace(/X/g, '*')).replace(/,/g, '.')})
             break;
         }
     }
@@ -58,11 +57,11 @@ handleClick(event){
 
   render(){
     return (
-      <div className="frame" style={{background:"gray",width:"420px",height:"420px",marginLeft:"500px",marginTop:"10px"}}>
+      <div className="frame" style={{background:"gray",width:"420px",height:"420px",margin:"auto"}}>
                   
                   <div className="mainCalc">
                     {/* Hiển thị kết quả */}
-                      <OutputScreen question={this.state.question} answer={this.state.answer}/>
+                      <OutputScreen question={this.state.question} />
                     <table>
                     <tr >
                           <th><Button className="btnaction1" label={'AC'}  handleClick={this.handleClick} /></th>
@@ -101,14 +100,7 @@ handleClick(event){
                           <th><Button className="btn" label={','}  handleClick={this.handleClick} /></th>
                           <th><Button className="btnaction" label={'='}  handleClick={this.handleClick} /></th>
                         </tr>
-                    </table>
-                       
-                      
-                     
-                      
-                      
-                      
-                      
+                    </table>   
                   </div>
               </div>
     );
