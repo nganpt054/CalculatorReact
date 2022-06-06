@@ -1,0 +1,92 @@
+*{
+  margin:0px;
+  padding:0px;
+  border-radius: 0px;
+  box-sizing: border-box;
+  font-size: 110%;
+}
+
+#root{
+  text-align:center;
+}
+.mainCalc{
+  
+  margin:0px;
+  padding:0px;
+  border-radius: 0px;
+
+}
+.th,td,tr{
+  padding: 0px;
+  
+}
+.screen-row input{
+  width: 300px;
+  background: #222222;
+  border: 0px;
+  color: #a4a3a3;
+  padding: 0px;
+  text-align: right;
+}
+
+
+
+.btn{
+  width: 100px;
+  height: 60px;
+  background: #b5b2b2;
+ 
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.btn:active{
+  background-color: #3e8e41;
+}
+.btn0{
+  width: 200px;
+  height: 60px;
+  background: #b5b2b2;
+ 
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.btn0:active{
+  background-color: #3e8e41;
+}
+
+.btnaction {
+  background-color: orange !important;
+  width: 100px;
+  height: 60px;
+  background: #b5b2b2;
+ 
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.btnaction:active{
+  background-color: #3e8e41 !important;
+}
+.btnaction1 {
+  background-color: #383836 !important;
+  width: 100px;
+  height: 60px;
+  background: #b5b2b2;
+ 
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.btnaction1:active{
+  background-color: aliceblue !important;
+}
