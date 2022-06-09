@@ -1,9 +1,9 @@
-
+import React from 'react';
 const OutputScreen = (props) => {
     return (
         <div className="screen"  >
-             <input type="text" readOnly value = {props.question}
-              style={{textAlign: "right",width:"400px",background:"gray",height:"100px",color:"white"}}/>  
+            <input type="text" readOnly value = {props.answer}
+            />   
         </div>
     )
 }
