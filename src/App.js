@@ -5,11 +5,13 @@ import Button from './Components/Button'
 import React from 'react';
 
 class App extends React.Component {
+
+  
   constructor(props) {
     super(props);
     this.state = {
        
-        answer:'0'
+        answer:''
     }
     this.handleClick = this.handleClick.bind(this);
 }
@@ -32,7 +34,7 @@ handleClick(event){
         }
         
         case 'AC': {
-            this.setState({ answer: '0' });
+            this.setState({ answer: '' });
             break;
         }
         
@@ -56,14 +58,15 @@ handleClick(event){
                     if ((this.state.answer).slice(-1)==='+'||
                         (this.state.answer).slice(-1)==='-'||
                         (this.state.answer).slice(-1)==='/'||
-                        (this.state.answer).slice(-1)==='x'||
-                        (this.state.answer).slice(-1)===',')
+                        (this.state.answer).slice(-1)==='x'
+                        )
                         {
                           if(  value!=='+'&&
                                value!=='-'&&
                                value!=='x'&&
-                               value!=='/'&&
-                               value!==',') 
+                               value!=='%'&&
+                               value!=='/'
+                              ) 
                          {
                             this.setState({ answer: 
                             (this.state.answer += value)})
@@ -107,6 +110,13 @@ handleClick(event){
                         this.setState({answer:this.state.answer+=value})
                      }
                      else
+                     if((this.state.answer).slice(-1)==='%'){
+                        if(value !== '+'&&value !== '-'&&value !== 'x'&&value !== '/'&&value !== '%'){
+                          this.setState({answer:this.state.answer+='x'+value});
+                        }
+                        else this.setState({answer:this.state.answer+=value});
+                     }
+                     else
                      {
                         this.setState({ answer:(this.state.answer += value)});
                      }
@@ -114,6 +124,7 @@ handleClick(event){
                else
                {
                     if( value===","||
+                        value==="%"||
                         value==="+"||
                         value==="-"||
                         value==="x"||
@@ -131,7 +142,7 @@ handleClick(event){
               }
            }
             else {
-              if(value!=='x'&&value!=='/'&&value!==',')
+              if(value!=='x'&&value!=='/'&&value!==','&&value!=='%')
               this.setState({answer:value}); 
             }
         }
