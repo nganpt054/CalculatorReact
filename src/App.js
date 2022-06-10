@@ -8,8 +8,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        question: '',
-        answer:''
+       
+        answer:'0'
     }
     this.handleClick = this.handleClick.bind(this);
 }
@@ -26,13 +26,13 @@ handleClick(event){
                 } catch (error) {
                   ans="Math Error"
                 }
-                this.setState({answer: ans});  
+                this.setState({answer: ans.toString()});  
             }
             break;
         }
         
         case 'AC': {
-            this.setState({ answer: '' });
+            this.setState({ answer: '0' });
             break;
         }
         
@@ -47,7 +47,7 @@ handleClick(event){
           {
            if ((this.state.answer)!=="")
             {
-              if(this.state.answer==="Math Error")
+              if(this.state.answer==="Math Error"||this.state.answer==="Infinity")
               this.setState({answer:value})
               else
               {
@@ -90,34 +90,48 @@ handleClick(event){
                                 this.setState({answer: str});
                               }
                            }
+                      
                         else
-                        // if ((this.state.answer).slice(-2,-1)===','||(this.state.answer).slice(-2,-1)==='0')
                                 {this.setState({ answer:(this.state.answer += value)})};
+                      } 
+                     else
+                     if(value===',')
+                     {
+                        var ans='';
+                        try {
+                          ans = eval((((this.state.answer+value).replace(/x/g, '*')).replace(/,/g, '.')).replace(/%/g, '/100'));
+                        } catch (error) {
+                          ans="Math Error"
+                        }
+                        if(ans!=="Math Error")
+                        this.setState({answer:this.state.answer+=value})
                      }
-                     else this.setState({ answer:(this.state.answer += value)});
+                     else
+                     {
+                        this.setState({ answer:(this.state.answer += value)});
+                     }
                }
                else
                {
-                 if( value===","||
-                     value==="+"||
-                     value==="-"||
-                     value==="x"||
-                     value==="/")
-                  {
-                    this.setState({ answer: 
-                    (this.state.answer += value)})
-                  }
-                  else 
-                  {
-                    var str=this.state.answer;
-                    str = str.slice(0,-1)+value;
-                    this.setState({answer: str});
-                  }
+                    if( value===","||
+                        value==="+"||
+                        value==="-"||
+                        value==="x"||
+                        value==="/")
+                      {
+                        this.setState({ answer:(this.state.answer += value)})
+                      }
+                    else 
+                      {
+                        var str=this.state.answer;
+                        str = str.slice(0,-1)+value;
+                        this.setState({answer: str});
+                      }
                 }
               }
            }
             else {
-              if(value!=='x'&&value!=='/')
+              if(value!=='x'&&value!=='/'&&value!==',')
               this.setState({answer:value}); 
             }
         }
@@ -140,55 +154,35 @@ handleClick(event){
                         <th key={index}><Button className={item.className} label={item.label}   handleClick={this.handleClick} /></th>
 
                       ))}
-                          {/* <th><Button className="btnaction1" label={'+/-'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btnaction1" label={'%'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btnaction" label={'/'} handleClick={this.handleClick} /></th> */}
                       </tr>
-                     
-                      
+
                       <tr >
                       {dataTwo.length > 0 && dataTwo.map((item, index) => (
                         <th key={index}><Button className={item.className} label={item.label}   handleClick={this.handleClick} /></th>
 
                       ))}
-                          {/* <th><Button className="btn" label={'7'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btn" label={'8'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btn" label={'9'}  handleClick={this.handleClick} /></th>
-                          <th> <Button className="btnaction" label={'X'}   handleClick={this.handleClick} /></th> */}
                       </tr>
                      
-                      
                       <tr >
                       {dataThree.length > 0 && dataThree.map((item, index) => (
                         <th key={index}><Button className={item.className} label={item.label}   handleClick={this.handleClick} /></th>
 
                       ))}
-                          {/* <th><Button className="btn" label={'4'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btn" label={'5'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btn" label={'6'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btnaction" label={'-'}  handleClick={this.handleClick} /></th> */}
                       </tr>
-                      
-                      
+
                       <tr >
                       {dataFour.length > 0 && dataFour.map((item, index) => (
                         <th key={index}><Button className={item.className} label={item.label}   handleClick={this.handleClick} /></th>
 
                       ))}
-                          {/* <th><Button className="btn" label={'1'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btn" label={'2'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btn" label={'3'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btnaction" label={'+'}  handleClick={this.handleClick} /></th> */}
                       </tr>
                     
                      
-                        <tr >
-                          <th colspan="2"><Button className="btn0"  label={'0'}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btn" label={','}  handleClick={this.handleClick} /></th>
-                          {/* <th><Button className="btn" label={'('}  handleClick={this.handleClick} /></th>
-                          <th><Button className="btn" label={')'}  handleClick={this.handleClick} /></th> */}
-                          <th><Button className="btnaction" label={'='}  handleClick={this.handleClick} /></th>
-                        </tr>
+                      <tr >
+                        {dataFive.length > 0 && dataFive.map((item, index) => (
+                        <th key={index} colSpan={item.colspan}><Button className={item.className} label={item.label}   handleClick={this.handleClick} /></th>
+                      ))}
+                      </tr>
                     </table>   
                   </div>
               </div>
@@ -266,6 +260,21 @@ const dataFour = [
   },
   {
     label: '+',
+    className: 'btnaction'
+  },
+]
+const dataFive = [
+  {
+    label: '0',
+    className: 'btn0',
+    colspan:'2'
+  },
+  {
+    label: ',',
+    className: 'btn'
+  },
+  {
+    label: '=',
     className: 'btnaction'
   },
 ]
